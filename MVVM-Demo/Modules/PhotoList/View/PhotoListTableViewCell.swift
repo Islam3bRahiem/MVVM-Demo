@@ -10,15 +10,25 @@ import UIKit
 
 class PhotoListTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var mainImageView: UIImageView!
+    @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var descriptionLabel: UILabel!
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var descContainerHeightConstraint: NSLayoutConstraint!
+
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        selectionStyle = .none
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+    
+    var photoListCellViewModel : PhotoListCellViewModel? {
+        didSet {
+            nameLabel.text = photoListCellViewModel?.titleText
+            descriptionLabel.text = photoListCellViewModel?.descText
+            mainImageView?.sd_setImage(with: URL( string: photoListCellViewModel?.imageUrl ?? "" ), completed: nil)
+            dateLabel.text = photoListCellViewModel?.dateText
+        }
     }
 
 }
